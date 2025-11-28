@@ -1,35 +1,34 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { NativeTabs, Icon, Label, VectorIcon } from 'expo-router/unstable-native-tabs';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useThemeContext } from '@/context/theme-context';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const { theme } = useThemeContext();
+  const backgroundColor = Colors[theme].background;
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
+    <NativeTabs
+      backgroundColor={backgroundColor}
+      shadowColor="transparent"
+      disableTransparentOnScrollEdge
+    >
+      <NativeTabs.Trigger name="index">
+        <Icon
+          sf="list.bullet.rectangle.fill"
+          androidSrc={<VectorIcon family={Ionicons} name="list" />}
+        />
+        <Label>Модули</Label>
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="settings">
+        <Icon
+          sf="gear"
+          androidSrc={<VectorIcon family={Ionicons} name="settings-sharp" />}
+        />
+        <Label>Настройки</Label>
+      </NativeTabs.Trigger>
+    </NativeTabs>
   );
 }
