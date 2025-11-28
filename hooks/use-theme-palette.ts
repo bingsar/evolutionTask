@@ -1,36 +1,36 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
-import { Colors } from '@/constants/theme';
-import { useThemeContext } from '@/context/theme-context';
+import { Colors } from '@/constants/theme'
+import { useThemeContext } from '@/context/theme-context'
 
 type Palette = {
-  background: string;
-  textPrimary: string;
-  textSecondary: string;
-  cardBg: string;
-  cardBorder: string;
-  cardDone: string;
-  cardActive: string;
-  cardActiveBorder: string;
-  cardLocked: string;
-  badgeBg: string;
-  subtitle: string;
+  background: string
+  textPrimary: string
+  textSecondary: string
+  cardBg: string
+  cardBorder: string
+  cardDone: string
+  cardActive: string
+  cardActiveBorder: string
+  cardLocked: string
+  badgeBg: string
+  subtitle: string
   option: {
-    bg: string;
-    border: string;
-    text: string;
-    description: string;
-    iconBg: string;
-    activeBg: string;
-    activeBorder: string;
-    activeText: string;
-    activeIconBg: string;
-  };
-};
+    bg: string
+    border: string
+    text: string
+    description: string
+    iconBg: string
+    activeBg: string
+    activeBorder: string
+    activeText: string
+    activeIconBg: string
+  }
+}
 
 export function useThemePalette(): Palette {
-  const { theme } = useThemeContext();
-  const palette = Colors[theme];
+  const { theme } = useThemeContext()
+  const palette = Colors[theme]
 
   return useMemo(
     () => ({
@@ -57,6 +57,6 @@ export function useThemePalette(): Palette {
         activeIconBg: palette.optionActiveIconBg,
       },
     }),
-    [palette]
-  );
+    [palette],
+  )
 }
