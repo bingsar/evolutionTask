@@ -1,20 +1,20 @@
-import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useMemo } from 'react';
-import { Alert, ColorValue, FlatList, Pressable, StyleSheet, View } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons'
+import { LinearGradient } from 'expo-linear-gradient'
+import { useMemo } from 'react'
+import { Alert, ColorValue, FlatList, Pressable, StyleSheet, View } from 'react-native'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { useThemePalette } from '@/hooks/use-theme-palette';
+import { ThemedText } from '@/components/themed-text'
+import { ThemedView } from '@/components/themed-view'
+import { useThemePalette } from '@/hooks/use-theme-palette'
 
-type LessonStatus = 'done' | 'active' | 'locked';
+type LessonStatus = 'done' | 'active' | 'locked'
 
 type Lesson = {
-  id: number;
-  title: string;
-  status: LessonStatus;
-};
+  id: number
+  title: string
+  status: LessonStatus
+}
 
 const lessons: Lesson[] = [
   { id: 1, title: 'Welcome Journey', status: 'done' },
@@ -22,66 +22,69 @@ const lessons: Lesson[] = [
   { id: 3, title: 'Источник вдохновения', status: 'locked' },
   { id: 4, title: 'Пространство идей', status: 'locked' },
   { id: 5, title: 'Финальный тест', status: 'locked' },
-];
+]
 
-const statusMeta: Record<LessonStatus, { label: string; color: string; icon: keyof typeof Ionicons.glyphMap }> = {
+const statusMeta: Record<
+  LessonStatus,
+  { label: string; color: string; icon: keyof typeof Ionicons.glyphMap }
+> = {
   done: { label: 'Пройден', color: '#16a34a', icon: 'checkmark-circle' },
   active: { label: 'Готов к старту', color: '#2563eb', icon: 'play-circle' },
   locked: { label: 'Закрыт', color: '#9ca3af', icon: 'lock-closed' },
-};
+}
 
 export default function HomeScreen() {
-  const palette = useThemePalette();
-  const insets = useSafeAreaInsets();
+  const palette = useThemePalette()
+  const insets = useSafeAreaInsets()
   const fadeColors = useMemo<[ColorValue, ColorValue]>(() => {
-    const bg = palette.background;
+    const bg = palette.background
 
     if (bg.startsWith('#')) {
-      let hex = bg.slice(1);
+      let hex = bg.slice(1)
 
       if (hex.length === 3) {
         hex = hex
           .split('')
           .map((c) => c + c)
-          .join('');
+          .join('')
       }
 
       if (hex.length === 6) {
-        return [`#${hex}`, `#${hex}00`];
+        return [`#${hex}`, `#${hex}00`]
       }
     }
 
-    return [bg, 'transparent'];
-  }, [palette.background]);
+    return [bg, 'transparent']
+  }, [palette.background])
 
   const handlePress = (lesson: Lesson) => {
     if (lesson.status === 'locked') {
-      Alert.alert('Урок закрыт', 'Пройдите текущий модуль, чтобы открыть следующий.');
-      return;
+      Alert.alert('Урок закрыт', 'Пройдите текущий модуль, чтобы открыть следующий.')
+      return
     }
 
     if (lesson.status === 'active') {
-      console.log('Start lesson');
-      return;
+      console.log('Start lesson')
+      return
     }
 
-    console.log('Lesson already completed');
-  };
+    console.log('Lesson already completed')
+  }
 
   const renderLesson = ({ item }: { item: Lesson }) => {
-    const meta = statusMeta[item.status];
-    const isLocked = item.status === 'locked';
-    let touchStartY = 0;
+    const meta = statusMeta[item.status]
+    const isLocked = item.status === 'locked'
+    let touchStartY = 0
 
     return (
       <Pressable
         onPressIn={(e) => {
-          touchStartY = e.nativeEvent.pageY;
+          touchStartY = e.nativeEvent.pageY
         }}
         onPressOut={(e) => {
-          const delta = Math.abs(e.nativeEvent.pageY - touchStartY);
+          const delta = Math.abs(e.nativeEvent.pageY - touchStartY)
           if (delta < 8) {
-            handlePress(item);
+            handlePress(item)
           }
         }}
         style={({ pressed }) => [
@@ -90,15 +93,14 @@ export default function HomeScreen() {
             backgroundColor: palette.cardBg,
             borderColor: palette.cardBorder,
           },
-          item.status === 'done'
-            ? { backgroundColor: palette.cardDone }
-            : undefined,
+          item.status === 'done' ? { backgroundColor: palette.cardDone } : undefined,
           item.status === 'active'
             ? { backgroundColor: palette.cardActive, borderColor: palette.cardActiveBorder }
             : undefined,
           item.status === 'locked' ? { backgroundColor: palette.cardLocked } : undefined,
           pressed && !isLocked ? styles.cardPressed : undefined,
-        ]}>
+        ]}
+      >
         <View style={styles.cardHeader}>
           <View style={[styles.statusDot, { backgroundColor: meta.color }]} />
           <ThemedText type="subtitle" style={[styles.cardTitle, { color: palette.textPrimary }]}>
@@ -121,8 +123,8 @@ export default function HomeScreen() {
           ) : null}
         </View>
       </Pressable>
-    );
-  };
+    )
+  }
 
   return (
     <ThemedView style={[styles.container, { backgroundColor: palette.background }]}>
@@ -132,7 +134,7 @@ export default function HomeScreen() {
             <ThemedText type="title" style={[styles.title, { color: palette.textPrimary }]}>
               Модули обучения
             </ThemedText>
-            <ThemedText style={[styles.subtitle, { color: palette.textSecondary }] }>
+            <ThemedText style={[styles.subtitle, { color: palette.textSecondary }]}>
               Уроки открываются по порядку. Завершите активный шаг, чтобы открыть следующий.
             </ThemedText>
           </View>
@@ -154,16 +156,12 @@ export default function HomeScreen() {
               showsVerticalScrollIndicator={false}
             />
 
-            <LinearGradient
-              pointerEvents="none"
-              colors={fadeColors}
-              style={styles.topFade}
-            />
+            <LinearGradient pointerEvents="none" colors={fadeColors} style={styles.topFade} />
           </View>
         </ThemedView>
       </SafeAreaView>
     </ThemedView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -270,4 +268,4 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 0.2,
   },
-});
+})

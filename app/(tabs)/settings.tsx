@@ -1,38 +1,53 @@
-import { Ionicons } from '@expo/vector-icons';
-import { useMemo } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons'
+import { useMemo } from 'react'
+import { Pressable, StyleSheet, View } from 'react-native'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { useThemeContext } from '@/context/theme-context';
-import { useThemePalette } from '@/hooks/use-theme-palette';
+import { ThemedText } from '@/components/themed-text'
+import { ThemedView } from '@/components/themed-view'
+import { useThemeContext } from '@/context/theme-context'
+import { useThemePalette } from '@/hooks/use-theme-palette'
 
 type Option = {
-  value: 'light' | 'dark' | 'system';
-  title: string;
-  description: string;
-  icon: keyof typeof Ionicons.glyphMap;
-};
+  value: 'light' | 'dark' | 'system'
+  title: string
+  description: string
+  icon: keyof typeof Ionicons.glyphMap
+}
 
 const themeOptions: Option[] = [
-  { value: 'light', title: 'Светлая', description: 'Классический светлый интерфейс', icon: 'sunny' },
-  { value: 'dark', title: 'Темная', description: 'Минимум бликов и максимум контраста', icon: 'moon' },
-  { value: 'system', title: 'Как в системе', description: 'Следовать настройке устройства', icon: 'phone-portrait' },
-];
+  {
+    value: 'light',
+    title: 'Светлая',
+    description: 'Классический светлый интерфейс',
+    icon: 'sunny',
+  },
+  {
+    value: 'dark',
+    title: 'Темная',
+    description: 'Минимум бликов и максимум контраста',
+    icon: 'moon',
+  },
+  {
+    value: 'system',
+    title: 'Как в системе',
+    description: 'Следовать настройке устройства',
+    icon: 'phone-portrait',
+  },
+]
 
 export default function SettingsScreen() {
-  const { preference, theme, setPreference } = useThemeContext();
-  const palette = useThemePalette();
-  const insets = useSafeAreaInsets();
+  const { preference, theme, setPreference } = useThemeContext()
+  const palette = useThemePalette()
+  const insets = useSafeAreaInsets()
 
   const subtitle = useMemo(() => {
     if (preference === 'system') {
-      return `Следуем системе: сейчас ${theme === 'dark' ? 'темная' : 'светлая'} тема`;
+      return `Следуем системе: сейчас ${theme === 'dark' ? 'темная' : 'светлая'} тема`
     }
 
-    return preference === 'dark' ? 'Темная тема включена' : 'Светлая тема включена';
-  }, [preference, theme]);
+    return preference === 'dark' ? 'Темная тема включена' : 'Светлая тема включена'
+  }, [preference, theme])
 
   return (
     <ThemedView style={styles.container}>
@@ -42,10 +57,17 @@ export default function SettingsScreen() {
             <ThemedText type="title" style={[styles.title, { color: palette.textPrimary }]}>
               Настройки
             </ThemedText>
-            <ThemedText style={[styles.subtitle, { color: palette.textSecondary }]}>{subtitle}</ThemedText>
+            <ThemedText style={[styles.subtitle, { color: palette.textSecondary }]}>
+              {subtitle}
+            </ThemedText>
           </View>
 
-          <View style={[styles.card, { backgroundColor: palette.cardBg, borderColor: palette.cardBorder }]}>
+          <View
+            style={[
+              styles.card,
+              { backgroundColor: palette.cardBg, borderColor: palette.cardBorder },
+            ]}
+          >
             <ThemedText type="subtitle" style={[styles.cardTitle, { color: palette.textPrimary }]}>
               Тема приложения
             </ThemedText>
@@ -55,7 +77,7 @@ export default function SettingsScreen() {
 
             <View style={styles.options}>
               {themeOptions.map((option) => {
-                const isActive = preference === option.value;
+                const isActive = preference === option.value
 
                 return (
                   <Pressable
@@ -68,14 +90,16 @@ export default function SettingsScreen() {
                         borderColor: isActive ? palette.option.activeBorder : palette.option.border,
                       },
                       pressed ? styles.optionPressed : undefined,
-                    ]}>
+                    ]}
+                  >
                     <View style={styles.optionLeft}>
                       <View
                         style={[
                           styles.iconWrap,
                           { backgroundColor: palette.option.iconBg },
                           isActive ? { backgroundColor: palette.option.activeIconBg } : undefined,
-                        ]}>
+                        ]}
+                      >
                         <Ionicons
                           name={option.icon}
                           size={18}
@@ -88,27 +112,33 @@ export default function SettingsScreen() {
                           style={[
                             styles.optionTitle,
                             { color: isActive ? palette.option.activeText : palette.option.text },
-                          ]}>
+                          ]}
+                        >
                           {option.title}
                         </ThemedText>
                         <ThemedText
                           style={[
                             styles.optionDescription,
-                            { color: isActive ? palette.option.activeText : palette.option.description },
-                          ]}>
+                            {
+                              color: isActive
+                                ? palette.option.activeText
+                                : palette.option.description,
+                            },
+                          ]}
+                        >
                           {option.description}
                         </ThemedText>
                       </View>
                     </View>
                   </Pressable>
-                );
+                )
               })}
             </View>
           </View>
         </View>
       </SafeAreaView>
     </ThemedView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -185,4 +215,4 @@ const styles = StyleSheet.create({
   optionDescription: {
     color: '#94a3b8',
   },
-});
+})
