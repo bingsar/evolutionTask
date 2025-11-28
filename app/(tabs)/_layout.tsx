@@ -1,12 +1,12 @@
-import { NativeTabs, Icon, Label, VectorIcon } from 'expo-router/unstable-native-tabs';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { NativeTabs, Icon, Label, VectorIcon } from 'expo-router/unstable-native-tabs'
+import Ionicons from '@expo/vector-icons/Ionicons'
 
-import { Colors } from '@/constants/theme';
-import { useThemeContext } from '@/context/theme-context';
+import { Colors } from '@/constants/theme'
+import { useThemeContext } from '@/context/theme-context'
 
 export default function TabLayout() {
-  const { theme } = useThemeContext();
-  const backgroundColor = Colors[theme].background;
+  const { theme } = useThemeContext()
+  const backgroundColor = Colors[theme].background
 
   return (
     <NativeTabs
@@ -23,12 +23,9 @@ export default function TabLayout() {
       </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="settings">
-        <Icon
-          sf="gear"
-          androidSrc={<VectorIcon family={Ionicons} name="settings-sharp" />}
-        />
+        <Icon sf="gear" androidSrc={<VectorIcon family={Ionicons} name="settings-sharp" />} />
         <Label>Настройки</Label>
       </NativeTabs.Trigger>
     </NativeTabs>
-  );
+  )
 }

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "evolutionTask",
-    "slug": "evolutionTask",
+    "slug": "evolution-task",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -43,6 +43,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "73397938-9ceb-4abb-a2a6-ec571ef6b4f8"
+      }
+    },
+    "owner": "bingsar"
   }
 }
